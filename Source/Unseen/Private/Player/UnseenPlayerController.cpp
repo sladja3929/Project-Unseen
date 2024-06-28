@@ -4,19 +4,27 @@
 #include "Player/UnseenPlayerController.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
+#include "Engine/LocalPlayer.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/Controller.h"
 #include "GameFramework/Character.h"
 
 
 void AUnseenPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	check(InputContext);
+	check(DefaultMappingContext);
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
 		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
-		Subsystem->AddMappingContext(InputContext, 0);
+		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
+
 }
 
 void AUnseenPlayerController::SetupInputComponent()
@@ -30,6 +38,8 @@ void AUnseenPlayerController::SetupInputComponent()
 
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AUnseenPlayerController::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AUnseenPlayerController::StopJumping);
+
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AUnseenPlayerController::ToggleCrouch);
 	}
 }
 
@@ -74,4 +84,62 @@ void AUnseenPlayerController::StopJumping(const FInputActionValue& InputActionVa
 	{
 		ControlledCharacter->StopJumping();
 	}
+}
+
+AUnseenPlayerController::AUnseenPlayerController()
+{
+}
+
+void AUnseenPlayerController::ToggleCrouch()
+{
+	IsCrouch = !IsCrouch; 
+	ACharacter* ControlledCharacter = GetCharacter();
+	ControlledCharacter->GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
+
+	if (true)
+	{
+		if (IsCrouch)
+		{
+			ControlledCharacter->UnCrouch();
+		}
+
+
+		else
+		{
+			ControlledCharacter->Crouch();
+			UE_LOG(LogTemp, Log, TEXT("Log Message"));
+		}
+	}
+	
+}
+
+void AUnseenPlayerController::SmoothCrouchInterpReturn(float Value)
+{
+	
+	if (ACharacter* ControlledCharacter = GetCharacter())
+	{
+		//ControlledCharacter->GetCapsuleComponent()->SetCapsuleHalfHeight(FMath::Lerp(88.f, ControlledCharacter->CrouchHeight, Value));
+		//FirstPersonCameraComponent->SetRelativeLocation(FVector(0.0f, 10.0f, (FMath::Lerp(160.0f, 120.0f, Value))));
+	}
+	
+}
+
+void AUnseenPlayerController::SmoothCrouchOnFinish()
+{
+	// ���ϸ� �ۼ�
+}
+
+void AUnseenPlayerController::SmoothCrouchTimelineSetting()
+{
+	if (SmoothCrouchingCurveFloat)
+	{
+		SmoothCrouchingCurveTimeline->AddInterpFloat(SmoothCrouchingCurveFloat, SmoothCrouchInterpFunction);
+		SmoothCrouchingCurveTimeline->SetTimelineFinishedFunc(SmoothCrouchTimelineFinish);
+		SmoothCrouchingCurveTimeline->SetLooping(false);
+	}
+}
+
+void AUnseenPlayerController::StartCrouch()
+{
+	SmoothCrouchingCurveTimeline->Play();
 }

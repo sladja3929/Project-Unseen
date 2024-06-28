@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -6,14 +6,16 @@
 #include "Character/UnseenCharacterBase.h"
 #include "UnseenCharacter.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class UNSEEN_API AUnseenCharacter : public AUnseenCharacterBase
+class AUnseenCharacter : public AUnseenCharacterBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Test")
-	float Test = 0.f;
+protected:
+
+	//virtual void BeginPlay() override;
+
+public:
+
 };
+
