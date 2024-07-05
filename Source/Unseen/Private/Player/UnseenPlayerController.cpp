@@ -24,7 +24,7 @@ void AUnseenPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
-
+	GetCharacter()->GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 }
 
 void AUnseenPlayerController::SetupInputComponent()
@@ -92,23 +92,24 @@ AUnseenPlayerController::AUnseenPlayerController()
 
 void AUnseenPlayerController::ToggleCrouch()
 {
-	IsCrouch = !IsCrouch; 
-	ACharacter* ControlledCharacter = GetCharacter();
-	ControlledCharacter->GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
-
-	if (true)
+	if (ACharacter* ControlledCharacter = GetCharacter())
 	{
-		if (IsCrouch)
+		if (!ControlledCharacter->GetCharacterMovement()->IsFalling())
 		{
-			ControlledCharacter->UnCrouch();
-		}
+			IsCrouch = !IsCrouch;
+
+			if (IsCrouch)
+			{
+				ControlledCharacter->UnCrouch();
+			}
 
 
-		else
-		{
-			ControlledCharacter->Crouch();
-			UE_LOG(LogTemp, Log, TEXT("Log Message"));
+			else
+			{
+				ControlledCharacter->Crouch();
+			}
 		}
+		
 	}
 	
 }
