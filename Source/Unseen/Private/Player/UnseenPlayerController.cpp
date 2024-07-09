@@ -12,7 +12,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Character.h"
-
+#include "Character/UnseenCharacter.h"
 
 void AUnseenPlayerController::BeginPlay()
 {
@@ -107,6 +107,8 @@ void AUnseenPlayerController::ToggleCrouch()
 			else
 			{
 				ControlledCharacter->Crouch();
+				AUnseenCharacter* Un = (AUnseenCharacter*)ControlledCharacter;
+				Un->gea();
 			}
 		}
 		
@@ -118,7 +120,8 @@ void AUnseenPlayerController::SmoothCrouchInterpReturn(float Value)
 {
 	
 	if (ACharacter* ControlledCharacter = GetCharacter())
-	{
+	{	
+		
 		//ControlledCharacter->GetCapsuleComponent()->SetCapsuleHalfHeight(FMath::Lerp(88.f, ControlledCharacter->CrouchHeight, Value));
 		//FirstPersonCameraComponent->SetRelativeLocation(FVector(0.0f, 10.0f, (FMath::Lerp(160.0f, 120.0f, Value))));
 	}

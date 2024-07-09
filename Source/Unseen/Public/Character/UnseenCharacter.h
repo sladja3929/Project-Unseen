@@ -6,6 +6,8 @@
 #include "Character/UnseenCharacterBase.h"
 #include "UnseenCharacter.generated.h"
 
+class UCameraComponent;
+
 UCLASS()
 class AUnseenCharacter : public AUnseenCharacterBase
 {
@@ -16,6 +18,8 @@ protected:
 	//virtual void BeginPlay() override;
 
 public:
+	AUnseenCharacter();
+	void gea();
 
 };
 
