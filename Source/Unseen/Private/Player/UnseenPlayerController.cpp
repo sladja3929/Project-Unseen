@@ -25,6 +25,7 @@ void AUnseenPlayerController::BeginPlay()
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
 	GetCharacter()->GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
+	MaxWalkSpeed = GetCharacter()->GetCharacterMovement()->MaxWalkSpeed;
 }
 
 void AUnseenPlayerController::SetupInputComponent()
@@ -40,6 +41,9 @@ void AUnseenPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AUnseenPlayerController::StopJumping);
 
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AUnseenPlayerController::ToggleCrouch);
+
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AUnseenPlayerController::Sprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AUnseenPlayerController::StopSprinting);
 	}
 }
 
@@ -96,8 +100,6 @@ void AUnseenPlayerController::ToggleCrouch()
 	{
 		if (!ControlledCharacter->GetCharacterMovement()->IsFalling())
 		{
-			IsCrouch = !IsCrouch;
-
 			if (IsCrouch)
 			{
 				ControlledCharacter->UnCrouch();
@@ -107,43 +109,35 @@ void AUnseenPlayerController::ToggleCrouch()
 			else
 			{
 				ControlledCharacter->Crouch();
-				AUnseenCharacter* Un = (AUnseenCharacter*)ControlledCharacter;
-				Un->gea();
+				//AUnseenCharacter* Un = (AUnseenCharacter*)ControlledCharacter;
+				//Un->gea();
 			}
+
+			IsCrouch = !IsCrouch;
 		}
 		
 	}
 	
 }
 
-void AUnseenPlayerController::SmoothCrouchInterpReturn(float Value)
+void AUnseenPlayerController::Sprint()
 {
-	
 	if (ACharacter* ControlledCharacter = GetCharacter())
-	{	
-		
-		//ControlledCharacter->GetCapsuleComponent()->SetCapsuleHalfHeight(FMath::Lerp(88.f, ControlledCharacter->CrouchHeight, Value));
-		//FirstPersonCameraComponent->SetRelativeLocation(FVector(0.0f, 10.0f, (FMath::Lerp(160.0f, 120.0f, Value))));
-	}
-	
-}
-
-void AUnseenPlayerController::SmoothCrouchOnFinish()
-{
-	// ���ϸ� �ۼ�
-}
-
-void AUnseenPlayerController::SmoothCrouchTimelineSetting()
-{
-	if (SmoothCrouchingCurveFloat)
 	{
-		SmoothCrouchingCurveTimeline->AddInterpFloat(SmoothCrouchingCurveFloat, SmoothCrouchInterpFunction);
-		SmoothCrouchingCurveTimeline->SetTimelineFinishedFunc(SmoothCrouchTimelineFinish);
-		SmoothCrouchingCurveTimeline->SetLooping(false);
+		if (!IsCrouch)
+		{
+			ControlledCharacter->GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed * 2.0f;
+			UE_LOG(LogTemp, Log, TEXT("Spr1"));
+		}
+		
 	}
 }
 
-void AUnseenPlayerController::StartCrouch()
+void AUnseenPlayerController::StopSprinting()
 {
-	SmoothCrouchingCurveTimeline->Play();
+	if (ACharacter* ControlledCharacter = GetCharacter())
+	{
+		ControlledCharacter->GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+		UE_LOG(LogTemp, Log, TEXT("Spr2"));
+	}
 }

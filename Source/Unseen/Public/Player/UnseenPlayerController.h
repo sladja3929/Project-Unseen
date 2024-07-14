@@ -50,25 +50,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* CrouchAction;
 
-	FOnTimelineFloat SmoothCrouchInterpFunction; // (1)
-	FOnTimelineEvent SmoothCrouchTimelineFinish; // (2)
-	UFUNCTION()
-	void SmoothCrouchInterpReturn(float Value); // (3)
-	UFUNCTION()
-	void SmoothCrouchOnFinish(); // (4)
-	UPROPERTY()
-	UTimelineComponent* SmoothCrouchingCurveTimeline; // (5)
-	UPROPERTY(EditAnywhere, Category = "Timeline")
-	UCurveFloat* SmoothCrouchingCurveFloat; // (6)
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SprintAction;
 
 	bool IsCrouch = false;
+	float MaxWalkSpeed;
 	AUnseenPlayerController();
 
 protected:
 	void ToggleCrouch();
-
-	void SmoothCrouchTimelineSetting();
-	void StartCrouch();
+	void Sprint();
+	void StopSprinting();
 
 protected:
 	virtual void BeginPlay() override;
