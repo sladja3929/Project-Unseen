@@ -16,14 +16,19 @@ class UNSEEN_API UBTTask_SetEnemyState : public UBTTaskNode
 {
 	GENERATED_BODY()
 
+public:
 	UBTTask_SetEnemyState();
 	
+private:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	
+	virtual FString GetStaticDescription() const override;
 public:
 	UPROPERTY(EditAnywhere)
 	EEnemyDetectionState EnemyDetectionState = EEnemyDetectionState::Neutral;
+	
+	FBlackboardKeySelector DetectionStateKey;
+	
 
-	virtual FString GetStaticDescription() const override;
-private:
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	
 };

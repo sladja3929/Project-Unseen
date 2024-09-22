@@ -8,28 +8,61 @@
 #include "UnseenEnemy.generated.h"
 
 
+class UWidgetComponent;
+
 UCLASS()
 class UNSEEN_API AUnseenEnemy : public AUnseenCharacterBase
 {
 	GENERATED_BODY()
 
 public:
+	
+	AUnseenEnemy();
+	
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	
+protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="State Info")
+	TObjectPtr<UWidgetComponent> HeadStateIcon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="State Info")
+	TObjectPtr<UWidgetComponent> CombatGaugeTest;
+
+
+public:
+	
 	UFUNCTION(BlueprintCallable)
 	void SetEnemyDetectionState(EEnemyDetectionState NewState);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void EnemyDetectionStateSet();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	FColor MaterialTintColor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	UTexture2D* Image = nullptr;
 	
-protected:
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float WarningGauge = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeUpSpeed = 50.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeDownDelay = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeDownSpeed = 50.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxWarningGauge = 100.f;
+
 	
 private:
+	
 	void SetEnemyDetectionInfoByState(EEnemyDetectionState NewState);
 	
 	UPROPERTY(VisibleAnywhere, Category="State")
