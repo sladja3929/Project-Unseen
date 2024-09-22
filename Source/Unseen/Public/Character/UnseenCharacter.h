@@ -19,7 +19,9 @@ protected:
 
 public:
 	AUnseenCharacter();
-	void gea();
+
+	UFUNCTION(BlueprintCallable, Category = "Move")
+	bool CheckBackPosition();
 
 };
 

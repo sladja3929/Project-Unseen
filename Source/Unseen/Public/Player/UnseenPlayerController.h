@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Character/UnseenAnimInstance.h"
 #include "Logging/LogMacros.h"
 #include "Components/TimeLineComponent.h"
 #include "UnseenPlayerController.generated.h"
@@ -54,19 +55,32 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SprintAction;
 
+	/** BackAttack Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* BackAttackAction;
+
+private:
+	bool IsBackAttack = false;
 	bool IsCrouch = false;
 	float MaxWalkSpeed;
-	AUnseenPlayerController();
+	class UUnseenAnimInstance* UnseenAnim;
 
 protected:
+	AUnseenPlayerController();
+
+	virtual void BeginPlay() override;
+	virtual void SetupInputComponent() override;
+	
 	void ToggleCrouch();
 	void Sprint();
 	void StopSprinting();
-
-protected:
-	virtual void BeginPlay() override;
-	virtual void SetupInputComponent() override;
-
+	void BackAttack();
+	
+	UFUNCTION()
+	void BackAttackEnd();
+	
+	UFUNCTION(BlueprintCallable, Category = "Move")
+	bool IsBackAttacking();
 
 private:
 	void Move(const FInputActionValue& InputActionValue);

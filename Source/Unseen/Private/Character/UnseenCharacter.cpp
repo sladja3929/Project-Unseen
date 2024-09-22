@@ -6,7 +6,9 @@ AUnseenCharacter::AUnseenCharacter()
 {
 
 }
-void AUnseenCharacter::gea()
+bool AUnseenCharacter::CheckBackPosition()
 {
-	UE_LOG(LogTemp, Log, TEXT("ae"));
+	UE_LOG(LogTemp, Log, TEXT("back"));
+	
+	return true;
 }

@@ -26,6 +26,10 @@ void AUnseenPlayerController::BeginPlay()
 	}
 	GetCharacter()->GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	MaxWalkSpeed = GetCharacter()->GetCharacterMovement()->MaxWalkSpeed;
+
+	UnseenAnim = Cast<UUnseenAnimInstance>(GetCharacter()->GetMesh()->GetAnimInstance());
+	check(nullptr != UnseenAnim);
+	UnseenAnim->OnBackAttackEnd.AddUFunction(this, FName("BackAttackEnd"));
 }
 
 void AUnseenPlayerController::SetupInputComponent()
@@ -44,6 +48,8 @@ void AUnseenPlayerController::SetupInputComponent()
 
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AUnseenPlayerController::Sprint);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AUnseenPlayerController::StopSprinting);
+
+		EnhancedInputComponent->BindAction(BackAttackAction, ETriggerEvent::Started, this, &AUnseenPlayerController::BackAttack);
 	}
 }
 
@@ -92,6 +98,7 @@ void AUnseenPlayerController::StopJumping(const FInputActionValue& InputActionVa
 
 AUnseenPlayerController::AUnseenPlayerController()
 {
+		
 }
 
 void AUnseenPlayerController::ToggleCrouch()
@@ -109,8 +116,6 @@ void AUnseenPlayerController::ToggleCrouch()
 			else
 			{
 				ControlledCharacter->Crouch();
-				//AUnseenCharacter* Un = (AUnseenCharacter*)ControlledCharacter;
-				//Un->gea();
 			}
 
 			IsCrouch = !IsCrouch;
@@ -127,7 +132,6 @@ void AUnseenPlayerController::Sprint()
 		if (!IsCrouch)
 		{
 			ControlledCharacter->GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed * 2.0f;
-			UE_LOG(LogTemp, Log, TEXT("Spr1"));
 		}
 		
 	}
@@ -138,6 +142,29 @@ void AUnseenPlayerController::StopSprinting()
 	if (ACharacter* ControlledCharacter = GetCharacter())
 	{
 		ControlledCharacter->GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
-		UE_LOG(LogTemp, Log, TEXT("Spr2"));
 	}
+}
+
+void AUnseenPlayerController::BackAttack()
+{
+	if(ACharacter* ControlledCharacter = GetCharacter())
+	{
+		AUnseenCharacter* Un = Cast<AUnseenCharacter>(ControlledCharacter);
+		if(Un->CheckBackPosition())
+		{
+			IsBackAttack = true;
+			SetIgnoreMoveInput(true);
+		}
+	}
+}
+
+void AUnseenPlayerController::BackAttackEnd()
+{
+	IsBackAttack = false;
+	SetIgnoreMoveInput(false);
+}
+
+bool AUnseenPlayerController::IsBackAttacking()
+{
+	return IsBackAttack;
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/UnseenCharacterBase.h"
+#include "Components/BoxComponent.h"
 #include "Data/EnemyStateInfo.h"
 #include "UnseenEnemy.generated.h"
 
@@ -19,12 +20,17 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void EnemyDetectionStateSet();
+	
+	UFUNCTION()
+	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
 	FColor MaterialTintColor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
 	UTexture2D* Image = nullptr;
+
 	
 protected:
 	virtual void BeginPlay() override;
@@ -38,5 +44,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="State")
 	TObjectPtr<UEnemyStateInfo> EnemyStateInfo;
 
+	UBoxComponent* BackArea;
 
 };
