@@ -21,7 +21,7 @@ void UBTService_RandomInteger::TickNode(UBehaviorTreeComponent& OwnerComp, uint8
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	int32 RandomValue = FMath::RandRange(0, RandMax);
+	int32 RandomValue = FMath::RandRange(0, RandMax - 1);
 	OwnerComp.GetBlackboardComponent()->SetValueAsInt(BlackboardKey.SelectedKeyName, RandomValue);
 }
 
