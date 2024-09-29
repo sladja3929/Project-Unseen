@@ -13,7 +13,8 @@ UCLASS()
 class UNSEEN_API UBTTask_UpdatePlayerLocationOnce : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
-
+	
+public:
 	UBTTask_UpdatePlayerLocationOnce();
 
 private:

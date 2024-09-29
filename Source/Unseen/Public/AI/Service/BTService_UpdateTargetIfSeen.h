@@ -14,10 +14,13 @@ class UNSEEN_API UBTService_UpdateTargetIfSeen : public UBTService_BlackboardBas
 {
 	GENERATED_BODY()
 
+public:
 	UBTService_UpdateTargetIfSeen();
-	
+
+protected:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
+public:
 	UPROPERTY(EditAnywhere)
 	float RecognitionDistance = 2000.f;
 

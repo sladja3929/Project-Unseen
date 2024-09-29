@@ -21,10 +21,11 @@ struct FEnemyDetectionStateInfo
 	float MovementSpeed = 0;
 };
 
-UENUM(BlueprintType)
+UENUM(BlueprintType, Blueprintable)
 enum class EEnemyDetectionState : uint8
 {
 	Neutral,
+	Awake,
 	SmallDetection,
 	IndirectDetection,
 	DirectDetection,

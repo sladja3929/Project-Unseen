@@ -3,23 +3,69 @@
 
 #include "Character/UnseenEnemy.h"
 
+#include "Components/WidgetComponent.h"
 #include "Character/UnseenCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+AUnseenEnemy::AUnseenEnemy()
+{	
+	HeadStateIcon = CreateDefaultSubobject<UWidgetComponent>("HeadStateIcon");
+	HeadStateIcon->SetupAttachment(GetRootComponent());
+
+	CombatGaugeTest = CreateDefaultSubobject<UWidgetComponent>("CombatGaugeTest");
+	CombatGaugeTest->SetupAttachment(GetRootComponent());
+
+	BackArea = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
+	BackArea->SetupAttachment(GetRootComponent());
+
+	BackArea->SetBoxExtent(FVector(30.0f, 40.0f, 95.0f));
+	BackArea->SetRelativeLocation(FVector(-50.0f, 0.0f, 0.0f));
+	BackArea->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
+}
+
+void AUnseenEnemy::BeginPlay()
+{
+	Super::BeginPlay();	
+	SetEnemyDetectionState(EnemyDetectionState);	
+	
+	BackArea->OnComponentBeginOverlap.AddDynamic(this, &AUnseenEnemy::OnComponentBeginOverlap);
+}
+
+void AUnseenEnemy::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	if(HeadStateIcon)
+	{
+		FVector IconLocation = HeadStateIcon->GetComponentLocation();
+		FVector CameraLocation = UGameplayStatics::GetPlayerCameraManager(this, 0)->GetCameraLocation();
+		FRotator IconRotator = (CameraLocation-IconLocation).Rotation();
+		
+		HeadStateIcon->SetWorldRotation(IconRotator);
+	}
+
+	if(CombatGaugeTest)
+	{
+		FVector IconLocation = CombatGaugeTest->GetComponentLocation();
+		FVector CameraLocation = UGameplayStatics::GetPlayerCameraManager(this, 0)->GetCameraLocation();
+		FRotator IconRotator = (CameraLocation-IconLocation).Rotation();
+		
+		CombatGaugeTest->SetWorldRotation(IconRotator);
+	}
+}
+
+/*  
+ * TODO: 적 캐릭터는 각각의 게이지가 있고, 게이지가 차면 Combat으로 바뀜
+ *			게이지가 차려면 보거나 무슨 일이 있거나 하는 식으로 해야함
+ *			옆에서 걸어 다니거나 해도 게이지가 차도록 하기
+ */
 
 void AUnseenEnemy::SetEnemyDetectionState(EEnemyDetectionState NewState)
 {
 	check(EnemyStateInfo);
 	SetEnemyDetectionInfoByState(NewState);
 	EnemyDetectionStateSet();
-}
-
-void AUnseenEnemy::BeginPlay()
-{
-	Super::BeginPlay();
-	SetEnemyDetectionState(EnemyDetectionState);
-	BackArea = FindComponentByClass<UBoxComponent>();
-	
-	BackArea->OnComponentBeginOverlap.AddDynamic(this, &AUnseenEnemy::OnComponentBeginOverlap);
 }
 
 void AUnseenEnemy::SetEnemyDetectionInfoByState(EEnemyDetectionState NewState)
@@ -35,7 +81,7 @@ void AUnseenEnemy::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedCompon
 {
 	if (OtherActor && OtherActor->IsA(AUnseenCharacter::StaticClass()))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Enemy overlapped with Player"));
+		UE_LOG(LogTemp, Warning, TEXT("Can BackAttack"));
 		// 여기에 원하는 로직 추가 (예: 데미지 처리, 이벤트 발생 등)
 	}
 }

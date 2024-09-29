@@ -9,12 +9,33 @@
 #include "UnseenEnemy.generated.h"
 
 
+class UWidgetComponent;
+
 UCLASS()
 class UNSEEN_API AUnseenEnemy : public AUnseenCharacterBase
 {
 	GENERATED_BODY()
 
 public:
+	
+	AUnseenEnemy();
+	
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	
+protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="State Info")
+	TObjectPtr<UWidgetComponent> HeadStateIcon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="State Info")
+	TObjectPtr<UWidgetComponent> CombatGaugeTest;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UBoxComponent* BackArea;
+	
+public:
+	
 	UFUNCTION(BlueprintCallable)
 	void SetEnemyDetectionState(EEnemyDetectionState NewState);
 
@@ -24,18 +45,31 @@ public:
 	UFUNCTION()
 	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	FColor MaterialTintColor;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfoTest")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	UTexture2D* Image = nullptr;
 
 	
-protected:
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float WarningGauge = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeUpSpeed = 50.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeDownDelay = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float GaugeDownSpeed = 50.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxWarningGauge = 100.f;
+
 	
 private:
+	
 	void SetEnemyDetectionInfoByState(EEnemyDetectionState NewState);
 	
 	UPROPERTY(VisibleAnywhere, Category="State")
@@ -43,7 +77,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="State")
 	TObjectPtr<UEnemyStateInfo> EnemyStateInfo;
-
-	UBoxComponent* BackArea;
-
 };

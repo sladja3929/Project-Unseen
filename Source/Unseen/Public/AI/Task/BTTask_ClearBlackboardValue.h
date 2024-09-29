@@ -13,10 +13,13 @@ UCLASS()
 class UNSEEN_API UBTTask_ClearBlackboardValue : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
-
+	
+public:
 	UBTTask_ClearBlackboardValue();
 
-private:
+protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	
+
+private:
+	virtual FString GetStaticDescription() const override;
 };
