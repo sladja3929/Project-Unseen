@@ -16,7 +16,7 @@ class UNSEEN_API UBTTask_GetRandomLocation : public UBTTask_BlackboardBase
 public:
 	UBTTask_GetRandomLocation();
 
-protected:
+private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 public:
