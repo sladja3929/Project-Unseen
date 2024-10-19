@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UnseenEnemy.h"
 #include "Character/UnseenCharacterBase.h"
 #include "UnseenCharacter.generated.h"
 
@@ -13,15 +14,23 @@ class AUnseenCharacter : public AUnseenCharacterBase
 {
 	GENERATED_BODY()
 
+private:
+	bool CanBackAttack;
+	AUnseenEnemy* Enemy;
+	
 protected:
-
+	
 	//virtual void BeginPlay() override;
 
-public:
+public:	
+	
 	AUnseenCharacter();
 
 	UFUNCTION(BlueprintCallable, Category = "Move")
-	bool CheckBackPosition();
+	bool CheckBackAttackAble();
 
+	void SetBackAttack(bool IsBackPosition, AUnseenEnemy* Enem);
+
+	void OnBackAttack();
 };
 

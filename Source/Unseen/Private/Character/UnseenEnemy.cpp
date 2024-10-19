@@ -22,6 +22,8 @@ AUnseenEnemy::AUnseenEnemy()
 	BackArea->SetBoxExtent(FVector(30.0f, 40.0f, 95.0f));
 	BackArea->SetRelativeLocation(FVector(-50.0f, 0.0f, 0.0f));
 	BackArea->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
+
+	OnBackAttackEvent.AddUFunction(this, FName("OnBackAttacked"));
 }
 
 void AUnseenEnemy::BeginPlay()
@@ -30,6 +32,7 @@ void AUnseenEnemy::BeginPlay()
 	SetEnemyDetectionState(EnemyDetectionState);	
 	
 	BackArea->OnComponentBeginOverlap.AddDynamic(this, &AUnseenEnemy::OnComponentBeginOverlap);
+	BackArea->OnComponentEndOverlap.AddDynamic(this, &AUnseenEnemy::OnComponentEndOverlap);
 }
 
 void AUnseenEnemy::Tick(float DeltaSeconds)
@@ -82,6 +85,27 @@ void AUnseenEnemy::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedCompon
 	if (OtherActor && OtherActor->IsA(AUnseenCharacter::StaticClass()))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Can BackAttack"));
-		// 여기에 원하는 로직 추가 (예: 데미지 처리, 이벤트 발생 등)
+		AUnseenCharacter* Unseen = Cast<AUnseenCharacter>(OtherActor);
+		Unseen->SetBackAttack(true, this);		
 	}
+}
+
+void AUnseenEnemy::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && OtherActor->IsA(AUnseenCharacter::StaticClass()))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Exit BackAttack"));
+		AUnseenCharacter* Unseen = Cast<AUnseenCharacter>(OtherActor);
+		Unseen->SetBackAttack(false, nullptr);
+	}
+}
+
+bool AUnseenEnemy::IsBackAttacked()
+{
+	return IsBackAttack;
+}
+
+void AUnseenEnemy::OnBackAttacked()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Dead"));
 }

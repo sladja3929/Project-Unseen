@@ -149,19 +149,23 @@ void AUnseenPlayerController::BackAttack()
 {
 	if(ACharacter* ControlledCharacter = GetCharacter())
 	{
-		AUnseenCharacter* Un = Cast<AUnseenCharacter>(ControlledCharacter);
-		if(Un->CheckBackPosition())
+		AUnseenCharacter* UnseenCharacter = Cast<AUnseenCharacter>(ControlledCharacter);
+		if(UnseenCharacter->CheckBackAttackAble())
 		{
 			IsBackAttack = true;
+			UnseenCharacter->OnBackAttack();
 			SetIgnoreMoveInput(true);
+			UnseenCharacter->Tags.Add("CriminalBehavior");
 		}
 	}
 }
 
 void AUnseenPlayerController::BackAttackEnd()
 {
+	AUnseenCharacter* UnseenCharacter = Cast<AUnseenCharacter>(GetCharacter());
 	IsBackAttack = false;
 	SetIgnoreMoveInput(false);
+	UnseenCharacter->Tags.Remove("CriminalBehavior");
 }
 
 bool AUnseenPlayerController::IsBackAttacking()

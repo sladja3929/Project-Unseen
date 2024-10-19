@@ -8,6 +8,7 @@
 #include "Data/EnemyStateInfo.h"
 #include "UnseenEnemy.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FBackAttackedDelegate);
 
 class UWidgetComponent;
 
@@ -45,12 +46,16 @@ public:
 	UFUNCTION()
 	void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+	void OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	FColor MaterialTintColor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="StateInfo")
 	UTexture2D* Image = nullptr;
-
+	
+	FBackAttackedDelegate OnBackAttackEvent;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float WarningGauge = 0.f;
@@ -66,15 +71,22 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxWarningGauge = 100.f;
-
 	
 private:
 	
 	void SetEnemyDetectionInfoByState(EEnemyDetectionState NewState);
+
+	UFUNCTION(BlueprintCallable)
+	bool IsBackAttacked();
+	
+	UFUNCTION()
+	void OnBackAttacked();
 	
 	UPROPERTY(VisibleAnywhere, Category="State")
 	EEnemyDetectionState EnemyDetectionState = EEnemyDetectionState::Neutral;
 
 	UPROPERTY(EditDefaultsOnly, Category="State")
 	TObjectPtr<UEnemyStateInfo> EnemyStateInfo;
+	
+	bool IsBackAttack = false;
 };
