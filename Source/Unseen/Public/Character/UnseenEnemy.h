@@ -87,6 +87,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="State")
 	TObjectPtr<UEnemyStateInfo> EnemyStateInfo;
-	
+
+	UCapsuleComponent *CollisionComponent;
 	bool IsBackAttack = false;
 };

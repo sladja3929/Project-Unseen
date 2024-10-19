@@ -12,6 +12,15 @@
   <component name="ChangeListManager">
     <list default="true" id="1d02c90a-90e7-4b05-bf88-b8946b25297b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Unseen/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Unseen/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/HoldEnemy/BP_HoldEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/HoldEnemy/BP_HoldEnemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Unseen/BP_UnseenCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Unseen/BP_UnseenCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/AITestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/AITestMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ThirdPerson/Characters/Mannequins/Animations/ABP_Manny.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ThirdPerson/Characters/Mannequins/Animations/ABP_Manny.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ThirdPerson/Characters/Mannequins/Animations/UnseenCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ThirdPerson/Characters/Mannequins/Animations/UnseenCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Unseen/Private/Character/UnseenCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Unseen/Private/Character/UnseenCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Unseen/Private/Character/UnseenEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Unseen/Private/Character/UnseenEnemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Unseen/Public/Character/UnseenCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Unseen/Public/Character/UnseenCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Unseen/Public/Character/UnseenEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Unseen/Public/Character/UnseenEnemy.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,27 +36,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 프로젝트.Unseen.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 프로젝트.Unseen.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\나원준\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\나원준\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\나원준\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\나원준\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\나원준\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\나원준\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ 프로젝트.Unseen">
     <configuration name="Unseen" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -181,6 +190,7 @@
       <workItem from="1714265063429" duration="565000" />
       <workItem from="1719419542215" duration="146000" />
       <workItem from="1728218148738" duration="112000" />
+      <workItem from="1729351692995" duration="6523000" />
     </task>
     <servers />
   </component>

@@ -5,6 +5,7 @@
 
 #include "Components/WidgetComponent.h"
 #include "Character/UnseenCharacter.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -19,6 +20,8 @@ AUnseenEnemy::AUnseenEnemy()
 	BackArea = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
 	BackArea->SetupAttachment(GetRootComponent());
 
+	CollisionComponent = Cast<UCapsuleComponent>(GetComponentByClass(UCapsuleComponent::StaticClass()));
+	
 	BackArea->SetBoxExtent(FVector(30.0f, 40.0f, 95.0f));
 	BackArea->SetRelativeLocation(FVector(-50.0f, 0.0f, 0.0f));
 	BackArea->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
@@ -107,5 +110,7 @@ bool AUnseenEnemy::IsBackAttacked()
 
 void AUnseenEnemy::OnBackAttacked()
 {
+	IsBackAttack = true;
+	CollisionComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	UE_LOG(LogTemp, Warning, TEXT("Dead"));
 }

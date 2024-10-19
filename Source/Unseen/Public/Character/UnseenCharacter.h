@@ -15,11 +15,14 @@ class AUnseenCharacter : public AUnseenCharacterBase
 	GENERATED_BODY()
 
 private:
+	
 	bool CanBackAttack;
 	AUnseenEnemy* Enemy;
 	
 protected:
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BackAttack")
+	float BackAttackOffset;
 	//virtual void BeginPlay() override;
 
 public:	
