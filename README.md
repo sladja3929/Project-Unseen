@@ -1,6 +1,20 @@
-## Unseen
-> Creator: devouring123
-> Date: 2024/2/15
+# Project Unseen
 
-## Description
-* Unseen에 대한 설명을 작성하세요
+Unreal 공부용 토이 프로젝트입니다.
+
+## 목차
++ 개요
++ 팀 소개
++ 환경
+
+## 개요
+3D 잡입 액션 장르입니다.
+
+
+## 팀 소개
+팀 구성: 나원준, 조경열, 서명교
+
+## 환경
++ 플랫폼: Windows PC
++ 엔진 및 플러그인: Unreal
++ 사용 언어: C++
